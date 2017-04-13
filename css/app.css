@@ -14,10 +14,16 @@ a {
 
 .code {
     background-color: #ddd;
-    padding:0.5rem;
+    padding:1rem;
+    border-radius: 5px;
 }
 
 .center {
     text-align: center;
 }
 
+/* 内容太长自动换行 */
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}

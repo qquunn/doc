@@ -2,7 +2,7 @@
 <html lang="cmn">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="css/app.css"/>
     <title>android手机通过v2ray actinium firefox访问外网</title>
 </head>
@@ -15,7 +15,7 @@
 <p class="title">VPS服务器 fedora25安装v2ray</p>
 <p>安装v2ray</p>
 <pre class="code">
-    bash <(curl -L -s https://install.direct/go.sh)
+bash <(curl -L -s https://install.direct/go.sh)
 </pre>
 
 <p>修改配置 vi /etc/v2ray/config.json<p>
@@ -50,8 +50,38 @@
 
 <ol>
     <li>下载和安装<a href="https://d1.winudf.com/b/apk/Y29tLnYycmF5LmFjdGluaXVtXzEwMDAwMTRfNTRjNmZlOGI?_fn=QWN0aW5pdW0gVjJSYXkgQ2xpZW50X3YwLjUuM19hcGtwdXJlLmNvbS5hcGs&_p=Y29tLnYycmF5LmFjdGluaXVt&as=c6cc2817e4f52b6bf4ccbde2adeb249a58ed82db&c=1%7CCOMMUNICATION&k=9a2cdf2dfc6b54f8502334d4d49a303458f103d5">actinium</a></li>
-    <li>下载配置文件<a href="./v2ray/client-config">client-config</a></li>
-    <li>打开actinium软件，点击右上角菜单，点击"添加配置"，导入刚下载的配置文件</li>
+    <li>下载配置文件<a href="./v2ray/client-config.json">client-config.json</a>，打开配置文件并修改address配置项的值。（提示：在手机上操作不方便，可以先下载配置文件到电脑上，修改配置，再通过360助手或微信等保存到手机上）。<br/>
+        如果下载配置文件出错，下面是配置文件client-config.json的内容，也可以直接复制，保存到文件中
+        <pre class="code">
+{
+  "inbound": {
+    "port": 9998, // 监听端口
+    "protocol": "socks", // 入口协议为 SOCKS 5
+    "settings": {
+      "auth": "noauth"  // 不认证
+    }
+  },
+  "outbound": {
+    "protocol": "vmess", // 出口协议
+    "settings": {
+      "vnext": [
+        {
+          "address": "10.100.72.52", // 服务器地址，请修改为你自己的服务器 ip 或域名
+          "port": 9999,  // 服务器端口
+          "users": [
+            {
+              "id": "1234561d-6324-4d53-ad4f-8cda48b30811",  // 用户 ID，必须与服务器端配置相同
+              "alterId": 64 // 此处的值也应当与服务器相同
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+        </pre>
+    </li>
+    <li>打开actinium软件，点击右上角菜单，点击"添加配置"，导入刚下载的配置文件。出现"转换配置文件"提示时，点击确定</li>
     <li>点击左下角图标，启动。手机会提示开启了VPN</li>
 </ol>
 
