@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="cmn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/app.css"/>
+    <title>android手机通过v2ray actinium firefox访问外网</title>
+</head>
+<body>
+
+<a href="index.html">返回首页</a>
+
+<p class="title center">android手机通过v2ray actinium firefox访问外网</p>
+
+<p class="title">VPS服务器 fedora25安装v2ray</p>
+<p>安装v2ray</p>
+<pre class="code">
+    bash <(curl -L -s https://install.direct/go.sh)
+</pre>
+
+<p>修改配置 vi /etc/v2ray/config.json<p>
+<pre class="code">
+{
+  "inbound": {
+    "port": 9999, // 服务器监听端口
+    "protocol": "vmess",    // 主传入协议
+    "settings": {
+      "clients": [
+        {
+          "id": "1234561d-6324-4d53-ad4f-8cda48b30811",  // 用户 ID，客户端与服务器必须相同
+          "alterId": 64
+        }
+      ]
+    }
+  },
+  "outbound": {
+    "protocol": "freedom",  // 主传出协议，参见协议列表
+    "settings": {}
+  }
+}
+</pre>
+
+<p>启动v2ray<p>
+<pre class="code">systemctl start  v2ray</pre>
+
+<p>在其他机器测试能否连接v2ray</p>
+<pre class="code">telnet ip地址 9999</pre>
+
+<p class="title">手机端安装和配置actinium</p>
+
+<ol>
+    <li>下载和安装<a href="https://d1.winudf.com/b/apk/Y29tLnYycmF5LmFjdGluaXVtXzEwMDAwMTRfNTRjNmZlOGI?_fn=QWN0aW5pdW0gVjJSYXkgQ2xpZW50X3YwLjUuM19hcGtwdXJlLmNvbS5hcGs&_p=Y29tLnYycmF5LmFjdGluaXVt&as=c6cc2817e4f52b6bf4ccbde2adeb249a58ed82db&c=1%7CCOMMUNICATION&k=9a2cdf2dfc6b54f8502334d4d49a303458f103d5">actinium</a></li>
+    <li>下载配置文件<a href="./v2ray/client-config.json">client-config.json</a></li>
+    <li>打开actinium软件，点击右上角菜单，点击"添加配置"，导入刚下载的配置文件</li>
+    <li>点击左下角图标，启动。手机会提示开启了VPN</li>
+</ol>
+
+<p class="title">配置firefox代理功能</p>
+<p>
+    打开firefox浏览器，地址栏中输入about:config，打开firefox配置界面。修改下面几个配置的值。
+</p>
+<pre class="code">
+network.proxy.socks 127.0.0.1
+network.proxy.socks_port 10808
+network.proxy.socks_remote_dns true
+
+network.proxy.type 1
+如果值为0,则表示不使用代理
+</pre>
+
+<p class="title">参考</p>
+<p>
+    <a href="https://toutyrater.github.io/v2ray-guide-pages/base_config/vmess.html">https://toutyrater.github.io/v2ray-guide-pages/base_config/vmess.html</a>
+</p>
+</body>
+</html>

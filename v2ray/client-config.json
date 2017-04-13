@@ -1,0 +1,26 @@
+{
+  "inbound": {
+    "port": 9998, // 监听端口
+    "protocol": "socks", // 入口协议为 SOCKS 5
+    "settings": {
+      "auth": "noauth"  // 不认证
+    }
+  },
+  "outbound": {
+    "protocol": "vmess", // 出口协议
+    "settings": {
+      "vnext": [
+        {
+          "address": "10.100.72.52", // 服务器地址，请修改为你自己的服务器 ip 或域名
+          "port": 9999,  // 服务器端口
+          "users": [
+            {
+              "id": "1234561d-6324-4d53-ad4f-8cda48b30811",  // 用户 ID，必须与服务器端配置相同
+              "alterId": 64 // 此处的值也应当与服务器相同
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
